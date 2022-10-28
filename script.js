@@ -34,14 +34,21 @@ colorPicker.addEventListener("input", () => {
   color = document.getElementById("color").value;
 })
 
-// Grid drawing
+// Paint grid
 
 const gridItem = document.querySelectorAll(".grid-item");
+let painted = false;
 
 for (let i = 0; i < gridItem.length; i++) {
-  gridItem[i].addEventListener("mouseover", () => gridDrawing(color));
-};
+  gridItem[i].addEventListener("mouseenter", (e) => paintGrid(e, color)
+  )};
 
-function gridDrawing(c) {
-  console.log(`Mouseover ${color}`);
+function paintGrid(e, c) {
+  painted = true;
+  if (painted) {
+    e.target.className = "active";
+  } else {
+    return;
+  };
+  console.log(`${e.target} ${color}`)
 };

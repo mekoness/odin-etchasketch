@@ -3,8 +3,8 @@
 const canvas = document.querySelector("#canvas");
 
 function makeGrid(size) {
-  canvas.style.setProperty('--grid-rows', size);
-  canvas.style.setProperty('--grid-cols', size);
+  canvas.style.setProperty("--grid-rows", size);
+  canvas.style.setProperty("--grid-cols", size);
   for (c = 0; c < (size * size); c++) {
     let cell = document.createElement("div");
     canvas.appendChild(cell).className = "grid-item";
@@ -21,6 +21,27 @@ const sizeLabel = document.querySelector("#size-label");
 sizeEl.addEventListener("input", () => {
   let size = sizeEl.value;
   sizeLabel.textContent = `${size}x${size}`;
-  canvas.innerHTML = ""
+  canvas.innerHTML = "";
   makeGrid(sizeEl.value);
+});
+
+// Color picker
+
+const colorPicker = document.getElementById("color")
+let color = document.getElementById("color").value;
+
+colorPicker.addEventListener("input", () => {
+  color = document.getElementById("color").value;
 })
+
+// Grid drawing
+
+const gridItem = document.querySelectorAll(".grid-item");
+
+for (let i = 0; i < gridItem.length; i++) {
+  gridItem[i].addEventListener("mouseover", () => gridDrawing(color));
+};
+
+function gridDrawing(c) {
+  console.log(`Mouseover ${color}`);
+};

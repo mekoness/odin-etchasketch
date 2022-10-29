@@ -9,7 +9,7 @@ function makeGrid(size) {
     let cell = document.createElement("div");
     canvas.appendChild(cell).className = "grid-item";
   };
-  
+  refreshGrid()
 };
 
 makeGrid(16);
@@ -24,6 +24,7 @@ sizeEl.addEventListener("input", () => {
   sizeLabel.textContent = `${size}x${size}`;
   canvas.innerHTML = "";
   makeGrid(sizeEl.value);
+  refreshGrid();
 });
 
 // Color picker
@@ -35,21 +36,21 @@ colorPicker.addEventListener("input", () => {
   color = document.getElementById("color").value;
 })
 
-// Paint grid
+// Refresh and paint grid
 
-let gridItem = document.querySelectorAll(".grid-item");
-let painted = false;
-
-gridItem.forEach(item => {
-  item.addEventListener('mouseover', (e) => {
-  item.style.setProperty("--color-pick", color)
-  item.style.setProperty("border", "1px solid #555")
-  paintGrid(e)
+function refreshGrid() {
+  let gridItem = document.querySelectorAll(".grid-item");
+  gridItem.forEach(item => {
+    item.addEventListener('mouseover', (e) => {
+    item.style.setProperty("--color-pick", color)
+    item.style.setProperty("border", "1px solid #555")
+    paintGrid(e)
+    });
   });
-});
+};
 
 function paintGrid(e) {
-  painted = true;
+  let painted = true;
   if (painted) {
     e.target.className = "active";
   };
@@ -66,3 +67,4 @@ function clearGrid() {
   makeGrid(sizeEl.value);
   refreshGrid()
 }
+

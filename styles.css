@@ -37,6 +37,11 @@ label {
     font-size: 1.2rem;
 }
 
+.btn {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2rem;
+}
+
 #canvas {
     padding: 0;
     margin: 1.2rem auto;
@@ -48,7 +53,7 @@ label {
 }
 
 .grid-item {
-    outline: 1px solid #555;
+    border: 1px solid #555;
     background-color: #fff;
 }
 

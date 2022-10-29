@@ -9,6 +9,7 @@ function makeGrid(size) {
     let cell = document.createElement("div");
     canvas.appendChild(cell).className = "grid-item";
   };
+  
 };
 
 makeGrid(16);
@@ -27,8 +28,8 @@ sizeEl.addEventListener("input", () => {
 
 // Color picker
 
-const colorPicker = document.getElementById("color")
-let color = document.getElementById("color").value;
+const colorPicker = document.querySelector("#color")
+let color = document.querySelector("#color").value;
 
 colorPicker.addEventListener("input", () => {
   color = document.getElementById("color").value;
@@ -36,19 +37,32 @@ colorPicker.addEventListener("input", () => {
 
 // Paint grid
 
-const gridItem = document.querySelectorAll(".grid-item");
+let gridItem = document.querySelectorAll(".grid-item");
 let painted = false;
 
-for (let i = 0; i < gridItem.length; i++) {
-  gridItem[i].addEventListener("mouseenter", (e) => paintGrid(e, color)
-  )};
+gridItem.forEach(item => {
+  item.addEventListener('mouseover', (e) => {
+  item.style.setProperty("--color-pick", color)
+  item.style.setProperty("border", "1px solid #555")
+  paintGrid(e)
+  });
+});
 
-function paintGrid(e, c) {
+function paintGrid(e) {
   painted = true;
   if (painted) {
     e.target.className = "active";
-  } else {
-    return;
   };
-  console.log(`${e.target} ${color}`)
 };
+
+// Clear grid
+
+const clearBtn = document.querySelector("#clear-canvas")
+
+clearBtn.onclick = () => clearGrid()
+
+function clearGrid() {
+  canvas.innerHTML = "";
+  makeGrid(sizeEl.value);
+  refreshGrid()
+}

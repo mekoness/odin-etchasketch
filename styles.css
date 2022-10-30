@@ -103,10 +103,12 @@ label {
 
 .btn:hover {
     background-color: var(--accent-color);
+    color: #000;
 }
 
 .toggle {
-    background-color: var(--accent-color);
+    background-color: #333;
+    color: #fff;
 }
 
 #canvas {

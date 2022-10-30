@@ -14,15 +14,23 @@
     <main>
         <header>
             <h1>Pixel Canvas</h1>
-            <label for="canvas-size">Canvas Size: <span id="size-label">16x16</span></label>
-            <input type="range" id="size-el" name="canvas-size" min="8" max="64" value="16">
-
-            <label for="color">Color Picker:</label>
-            <input type="color" id="color" name="color" value="#333333">
-
-            <button class="btn" id="clear-canvas">Clear Canvas</button>
+            <section>
+                <label for="canvas-size">Canvas Size: <span id="size-label">16x16</span></label>
+                <input type="range" class="slider" id="size-el" name="canvas-size" min="8" max="64" value="16">
+            </section>
+            <section class="options-btns">
+                <input type="color" class="btn" id="color" name="color" value="#333333">
+                <button class="btn" id="eraser-toggle">Eraser Mode</button>
+                <button class="btn" id="gray-toggle">Grayscale Mode</button>
+                <button class="btn" id="rainbow-toggle">Rainbow Mode</button>
+                <button class="btn" id="grid-toggle">Grid Toggle</button>
+                <button class="btn" id="clear-canvas">Clear Canvas</button>
+            </section>
         </header>
         <div class="container" id="canvas"></div>
+        <footer>
+            <p class="credit">Created by <a href="https://github.com/mekoness" target="_blank">Stephanie Fong</a></p>
+        </footer>
     </main>
     <script src="script.js"></script>
 </body>

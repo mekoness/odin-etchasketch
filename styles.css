@@ -8,6 +8,7 @@
     --grid-cols: 1;
     --grid-rows: 1;
     --color-pick: #000;
+    --accent-color: chartreuse ;
   }
 
 body {
@@ -21,40 +22,110 @@ body {
     text-shadow: 1px 1px #eee;
 }
 
+a {
+    color: #999;
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--accent-color);
+}
+
 main {
+    width: 700px;
     margin: 0 auto;
-    padding: 1.2rem 0;
+    padding: 0;
 }
 
 h1 {
     margin-top: 0;
-    margin-bottom: 1rem;
+    margin-bottom: .5rem;
     font-family: 'Permanent Marker', cursive;
     font-size: 3rem;
 }
 
 label {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
+    margin-right: .5rem;
+}
+
+.slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10rem;
+    height: .5rem;
+    border-radius: 5px;
+    outline: none;
+    background-color: #fff;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider:hover,
+.slider:focus {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1rem;
+    height: 1rem;
+    background-color: var(--accent-color);
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 1rem;
+    height: 1rem;
+    background-color: var(--accent-color);
+    cursor: pointer;
+}
+
+.options-btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    justify-content: center;
+    align-items: center;
+    margin-top: .5rem;
+    margin-bottom: 0;
 }
 
 .btn {
+    width: 10rem;
+    height: 2.5rem;
+    border: none;
     font-family: 'Roboto', sans-serif;
     font-size: 1.2rem;
 }
 
+.btn:hover {
+    background-color: var(--accent-color);
+}
+
+.toggle {
+    background-color: var(--accent-color);
+}
+
 #canvas {
     padding: 0;
-    margin: 1.2rem auto;
-    width: 700px;
-    height: 700px;
+    margin: 1rem auto;
+    width: 650px;
+    height: 650px;
     display: grid;
     grid-template-rows: repeat(var(--grid-rows), 1fr);
     grid-template-columns: repeat(var(--grid-cols), 1fr);
 }
 
 .grid-item {
-    border: 1px solid #555;
+    border: 1px solid #999;
     background-color: #fff;
+}
+
+.grid-item:hover {
+    border: 3px solid var(--accent-color);
 }
 
 .active {

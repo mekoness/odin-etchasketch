@@ -33,7 +33,7 @@ const colorPicker = document.querySelector("#color")
 let color = document.querySelector("#color").value;
 
 colorPicker.addEventListener("input", () => {
-  color = document.getElementById("color").value;
+  color = document.querySelector("#color").value;
 })
 
 // Mouse status
@@ -53,13 +53,11 @@ function refreshGrid() {
       if (mouseDown) {
         item.style.setProperty("--color-pick", color);
         paintGrid(e);
-      };
+      } else if (!mouseDown) {
+        return
+      }
     });
   });
-};
-
-canvas.onclick = (e) => {
-  paintGrid(e)
 };
 
 function paintGrid(e) {
@@ -70,10 +68,14 @@ function paintGrid(e) {
     painted = false
     e.target.classList.remove("active");
   };
-  if (!rainbowBtn) {
-    return
-  } else if (rainbowBtn) {
+  if (rainbowBtn) {
     painted = true
+    color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+    e.target.classList.add("active");
+  };
+  if (grayBtn) {
+    painted = true
+    color = "rgba(0, 0, 0, 0.1)";
     e.target.classList.add("active");
   };
 };
@@ -95,15 +97,19 @@ const eraserToggle = document.querySelector("#eraser-toggle");
 let eraserBtn = false
 
 eraserToggle.addEventListener("click", () => {
-  if (!eraserBtn) {
-    eraserBtn = true;
-    eraserToggle.classList.add("toggle");
-    eraserToggle.textContent = "Eraser: On";
-  } else if (eraserBtn) {
-    eraserBtn = false;
-    color = document.querySelector("#color").value;
-    eraserToggle.classList.remove("toggle");
-    eraserToggle.textContent = "Eraser: Off";
+  if (!grayBtn && !rainbowBtn) {
+    if (!eraserBtn) {
+      eraserBtn = true;
+      eraserToggle.classList.add("toggle");
+      eraserToggle.textContent = "Eraser: On";
+    } else if (eraserBtn) {
+      eraserBtn = false;
+      color = document.querySelector("#color").value;
+      eraserToggle.classList.remove("toggle");
+      eraserToggle.textContent = "Eraser: Off";
+    };
+  } else if (grayBtn || rainbowBtn) {
+    return;
   };
 });
 
@@ -111,7 +117,7 @@ const rainbowToggle = document.querySelector("#rainbow-toggle");
 let rainbowBtn = false
 
 rainbowToggle.addEventListener("click", () => {
-  if (!grayBtn) {
+  if (!grayBtn && !eraserBtn) {
     if (!rainbowBtn) {
       rainbowBtn = true;
       rainbowToggle.classList.add("toggle");
@@ -121,16 +127,16 @@ rainbowToggle.addEventListener("click", () => {
       rainbowToggle.classList.remove("toggle");
       rainbowToggle.textContent = "Rainbow: Off";
     };
-  } else if (grayBtn) {
+  } else if (grayBtn || eraserBtn) {
     return;
-  }; 
+  };
 });
 
 const grayToggle = document.querySelector("#gray-toggle");
 let grayBtn = false
 
 grayToggle.addEventListener("click", () => {
-  if (!rainbowBtn) {
+  if (!rainbowBtn && !eraserBtn) {
     if (!grayBtn) {
       grayBtn = true;
       grayToggle.classList.add("toggle");
@@ -140,7 +146,7 @@ grayToggle.addEventListener("click", () => {
       grayToggle.classList.remove("toggle");
       grayToggle.textContent = "Grayscale: Off";
     };
-  } else if (rainbowBtn) {
+  } else if (rainbowBtn || eraserBtn) {
     return;
   };
 });

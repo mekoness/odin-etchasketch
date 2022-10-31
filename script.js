@@ -14,6 +14,52 @@ function makeGrid(size) {
 
 makeGrid(16);
 
+// Mouse status
+
+let mouseDown = false
+canvas.onmousedown = () => (mouseDown = true)
+canvas.onmouseup = () => (mouseDown = false)
+
+// Refresh grid
+
+function refreshGrid() {
+  let gridItem = document.querySelectorAll(".grid-item");
+  gridItem.forEach(item => {
+    item.addEventListener("mousedown", (e) => {
+      item.style.setProperty("--color-pick", color);
+      paintGrid(e)
+    });
+    item.addEventListener("mouseenter", (e) => {
+      if (mouseDown) {
+        item.style.setProperty("--color-pick", color);
+        paintGrid(e);
+      } else if (!mouseDown) {
+        return
+      }
+    });
+  });
+};
+
+// Paint grid
+
+let color = document.querySelector("#color").value;
+let painted = false
+
+function paintGrid(e) {
+  if (!eraserBtn) {
+    painted = true;
+    e.target.classList.add("active");
+  } else if (eraserBtn) {
+    painted = false
+    e.target.classList.remove("active");
+  };
+  if (rainbowBtn) {
+    color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+  } else if (!rainbowBtn) {
+    color = document.querySelector("#color").value;
+  };
+};
+
 // Grid size slider
 
 const sizeEl = document.querySelector("#size-el");
@@ -30,53 +76,10 @@ sizeEl.addEventListener("input", () => {
 // Color picker
 
 const colorPicker = document.querySelector("#color")
-let color = document.querySelector("#color").value;
 
 colorPicker.addEventListener("input", () => {
   color = document.querySelector("#color").value;
 })
-
-// Mouse status
-
-let mouseDown = false
-canvas.onmousedown = () => (mouseDown = true)
-canvas.onmouseup = () => (mouseDown = false)
-
-// Refresh and paint grid
-
-let painted = false
-
-function refreshGrid() {
-  let gridItem = document.querySelectorAll(".grid-item");
-  gridItem.forEach(item => {
-    item.addEventListener("mouseover", (e) => {
-      if (mouseDown) {
-        item.style.setProperty("--color-pick", color);
-        paintGrid(e);
-      } else if (!mouseDown) {
-        return
-      }
-    });
-  });
-};
-
-function paintGrid(e) {
-  if (!eraserBtn) {
-    painted = true;
-    e.target.classList.add("active");
-  } else if (eraserBtn) {
-    painted = false
-    e.target.classList.remove("active");
-  };
-  if (rainbowBtn) {
-    color = `hsl(${Math.random() * 360}, 100%, 50%)`;
-  } else if (!rainbowBtn) {
-    color = document.querySelector("#color").value;
-  }
-  if (grayBtn) {
-    color = "rgba(0, 0, 0, 0.1)";
-  };
-};
 
 // Clear grid
 

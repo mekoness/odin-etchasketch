@@ -36,17 +36,30 @@ colorPicker.addEventListener("input", () => {
   color = document.getElementById("color").value;
 })
 
+// Mouse status
+
+let mouseDown = false
+canvas.onmousedown = () => (mouseDown = true)
+canvas.onmouseup = () => (mouseDown = false)
+
 // Refresh and paint grid
+
+let painted = false
 
 function refreshGrid() {
   let gridItem = document.querySelectorAll(".grid-item");
   gridItem.forEach(item => {
-    item.addEventListener('mousedown', (e) => {
-    item.style.setProperty("--color-pick", color)
-    item.style.setProperty("border", "1px solid #999")
-    paintGrid(e)
+    item.addEventListener("mouseenter", (e) => {
+      if (mouseDown) {
+        item.style.setProperty("--color-pick", color);
+        paintGrid(e);
+      };
     });
   });
+};
+
+canvas.onclick = (e) => {
+  paintGrid(e)
 };
 
 function paintGrid(e) {
@@ -54,22 +67,27 @@ function paintGrid(e) {
     painted = true;
     e.target.classList.add("active");
   } else if (eraserBtn) {
+    painted = false
     e.target.classList.remove("active");
-  }
-
+  };
+  if (!rainbowBtn) {
+    return
+  } else if (rainbowBtn) {
+    painted = true
+    e.target.classList.add("active");
+  };
 };
 
 // Clear grid
 
-const clearBtn = document.querySelector("#clear-canvas")
-
-clearBtn.onclick = () => clearGrid()
+const clearBtn = document.querySelector("#clear-canvas");
+clearBtn.onclick = () => clearGrid();
 
 function clearGrid() {
   canvas.innerHTML = "";
   makeGrid(sizeEl.value);
   refreshGrid()
-}
+};
 
 // Toggle buttons
 
@@ -86,25 +104,6 @@ eraserToggle.addEventListener("click", () => {
     color = document.querySelector("#color").value;
     eraserToggle.classList.remove("toggle");
     eraserToggle.textContent = "Eraser: Off";
-  };
-});
-
-const grayToggle = document.querySelector("#gray-toggle");
-let grayBtn = false
-
-grayToggle.addEventListener("click", () => {
-  if (!rainbowBtn) {
-    if (!grayBtn) {
-      grayBtn = true;
-      grayToggle.classList.add("toggle");
-      grayToggle.textContent = "Grayscale: On";
-    } else if (grayBtn) {
-      grayBtn = false;
-      grayToggle.classList.remove("toggle");
-      grayToggle.textContent = "Grayscale: Off";
-    };
-  } else if (rainbowBtn) {
-    return;
   };
 });
 
@@ -127,6 +126,25 @@ rainbowToggle.addEventListener("click", () => {
   }; 
 });
 
+const grayToggle = document.querySelector("#gray-toggle");
+let grayBtn = false
+
+grayToggle.addEventListener("click", () => {
+  if (!rainbowBtn) {
+    if (!grayBtn) {
+      grayBtn = true;
+      grayToggle.classList.add("toggle");
+      grayToggle.textContent = "Grayscale: On";
+    } else if (grayBtn) {
+      grayBtn = false;
+      grayToggle.classList.remove("toggle");
+      grayToggle.textContent = "Grayscale: Off";
+    };
+  } else if (rainbowBtn) {
+    return;
+  };
+});
+
 const gridToggle = document.querySelector("#grid-toggle");
 let gridBtn = false
 
@@ -135,7 +153,6 @@ gridToggle.addEventListener("click", () => {
     gridBtn = true;
     gridToggle.classList.add("toggle");
     gridToggle.textContent = "Grid Lines: Off";
-    gridItem.forEach()
   } else if (gridBtn) {
     gridBtn = false;
     gridToggle.classList.remove("toggle");

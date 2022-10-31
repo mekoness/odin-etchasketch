@@ -1,4 +1,4 @@
-// Generate grid
+// GENERATE GRID
 
 const canvas = document.querySelector("#canvas");
 
@@ -14,13 +14,13 @@ function makeGrid(size) {
 
 makeGrid(16);
 
-// Mouse status
+// MOUSE STATUS
 
 let mouseDown = false
 canvas.onmousedown = () => (mouseDown = true)
 canvas.onmouseup = () => (mouseDown = false)
 
-// Refresh grid
+// REFRESH GRID
 
 function refreshGrid() {
   let gridItem = document.querySelectorAll(".grid-item");
@@ -40,7 +40,7 @@ function refreshGrid() {
   });
 };
 
-// Paint grid
+// PAINT GRID
 
 let color = document.querySelector("#color").value;
 let painted = false
@@ -58,9 +58,14 @@ function paintGrid(e) {
   } else if (!rainbowBtn) {
     color = document.querySelector("#color").value;
   };
+  if (grayBtn) {
+    color = "rgba(0, 0, 0, 0.1)"; // PLACEHOLDER
+  } else if (!grayBtn) {
+    color = document.querySelector("#color").value;
+  }
 };
 
-// Grid size slider
+// GRID SIZE SLIDER
 
 const sizeEl = document.querySelector("#size-el");
 const sizeLabel = document.querySelector("#size-label");
@@ -73,7 +78,7 @@ sizeEl.addEventListener("input", () => {
   refreshGrid();
 });
 
-// Color picker
+// COLOR PICKER
 
 const colorPicker = document.querySelector("#color")
 
@@ -81,7 +86,7 @@ colorPicker.addEventListener("input", () => {
   color = document.querySelector("#color").value;
 })
 
-// Clear grid
+// CLEAR CANVAS
 
 const clearBtn = document.querySelector("#clear-canvas");
 clearBtn.onclick = () => clearGrid();
@@ -92,7 +97,21 @@ function clearGrid() {
   refreshGrid()
 };
 
-// Toggle buttons
+// GRID BORDER
+
+function gridBorder() {
+  let gridItem =  document.querySelectorAll(".grid-item")
+  gridItem.forEach(item => {
+    if (gridBtn) {
+      item.classList.add("grid-border");
+    } else if (!gridBtn) {
+      item.classList.remove("grid-border");
+    }
+  });
+  refreshGrid();
+};
+
+// TOGGLE BUTTONS
 
 const eraserToggle = document.querySelector("#eraser-toggle");
 let eraserBtn = false
@@ -159,10 +178,12 @@ gridToggle.addEventListener("click", () => {
   if (!gridBtn) {
     gridBtn = true;
     gridToggle.classList.add("toggle");
-    gridToggle.textContent = "Grid Lines: Off";
+    gridToggle.textContent = "Grid Lines: On";
+    gridBorder()
   } else if (gridBtn) {
     gridBtn = false;
     gridToggle.classList.remove("toggle");
-    gridToggle.textContent = "Grid Lines: On";
+    gridToggle.textContent = "Grid Lines: Off";
+    gridBorder()
   };
 });

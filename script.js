@@ -50,10 +50,13 @@ function refreshGrid() {
 };
 
 function paintGrid(e) {
-  painted = true;
-  if (painted) {
+  if (!eraserBtn) {
+    painted = true;
     e.target.classList.add("active");
-  };
+  } else if (eraserBtn) {
+    e.target.classList.remove("active");
+  }
+
 };
 
 // Clear grid
@@ -76,7 +79,6 @@ let eraserBtn = false
 eraserToggle.addEventListener("click", () => {
   if (!eraserBtn) {
     eraserBtn = true;
-    color = "#fff"
     eraserToggle.classList.add("toggle");
     eraserToggle.textContent = "Eraser: On";
   } else if (eraserBtn) {
@@ -91,14 +93,18 @@ const grayToggle = document.querySelector("#gray-toggle");
 let grayBtn = false
 
 grayToggle.addEventListener("click", () => {
-  if (!grayBtn) {
-    grayBtn = true;
-    grayToggle.classList.add("toggle");
-    grayToggle.textContent = "Grayscale: On";
-  } else if (grayBtn) {
-    grayBtn = false;
-    grayToggle.classList.remove("toggle");
-    grayToggle.textContent = "Grayscale: Off";
+  if (!rainbowBtn) {
+    if (!grayBtn) {
+      grayBtn = true;
+      grayToggle.classList.add("toggle");
+      grayToggle.textContent = "Grayscale: On";
+    } else if (grayBtn) {
+      grayBtn = false;
+      grayToggle.classList.remove("toggle");
+      grayToggle.textContent = "Grayscale: Off";
+    };
+  } else if (rainbowBtn) {
+    return;
   };
 });
 
@@ -106,15 +112,19 @@ const rainbowToggle = document.querySelector("#rainbow-toggle");
 let rainbowBtn = false
 
 rainbowToggle.addEventListener("click", () => {
-  if (!rainbowBtn) {
-    rainbowBtn = true;
-    rainbowToggle.classList.add("toggle");
-    rainbowToggle.textContent = "Rainbow: On";
-  } else if (rainbowBtn) {
-    rainbowBtn = false;
-    rainbowToggle.classList.remove("toggle");
-    rainbowToggle.textContent = "Rainbow: Off";
-  };
+  if (!grayBtn) {
+    if (!rainbowBtn) {
+      rainbowBtn = true;
+      rainbowToggle.classList.add("toggle");
+      rainbowToggle.textContent = "Rainbow: On";
+    } else if (rainbowBtn) {
+      rainbowBtn = false;
+      rainbowToggle.classList.remove("toggle");
+      rainbowToggle.textContent = "Rainbow: Off";
+    };
+  } else if (grayBtn) {
+    return;
+  }; 
 });
 
 const gridToggle = document.querySelector("#grid-toggle");
@@ -125,6 +135,7 @@ gridToggle.addEventListener("click", () => {
     gridBtn = true;
     gridToggle.classList.add("toggle");
     gridToggle.textContent = "Grid Lines: Off";
+    gridItem.forEach()
   } else if (gridBtn) {
     gridBtn = false;
     gridToggle.classList.remove("toggle");

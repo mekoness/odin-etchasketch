@@ -8,7 +8,7 @@
     --grid-cols: 1;
     --grid-rows: 1;
     --color-pick: #000;
-    --accent-color: chartreuse ;
+    --accent-color: chartreuse;
   }
 
 body {
@@ -127,7 +127,8 @@ label {
 }
 
 .grid-item:hover {
-    border: 3px solid var(--accent-color);
+    transform: scale(1.1, 1.1);
+    outline: 3px solid var(--accent-color);
 }
 
 .active {

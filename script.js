@@ -49,7 +49,7 @@ let painted = false
 function refreshGrid() {
   let gridItem = document.querySelectorAll(".grid-item");
   gridItem.forEach(item => {
-    item.addEventListener("mouseenter", (e) => {
+    item.addEventListener("mouseover", (e) => {
       if (mouseDown) {
         item.style.setProperty("--color-pick", color);
         paintGrid(e);
@@ -69,14 +69,12 @@ function paintGrid(e) {
     e.target.classList.remove("active");
   };
   if (rainbowBtn) {
-    painted = true
     color = `hsl(${Math.random() * 360}, 100%, 50%)`;
-    e.target.classList.add("active");
-  };
+  } else if (!rainbowBtn) {
+    color = document.querySelector("#color").value;
+  }
   if (grayBtn) {
-    painted = true
     color = "rgba(0, 0, 0, 0.1)";
-    e.target.classList.add("active");
   };
 };
 

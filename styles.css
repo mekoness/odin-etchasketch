@@ -32,7 +32,7 @@ a:hover {
 }
 
 main {
-    width: 650px;
+    width: 700px;
     margin: 0 auto;
     padding: 0;
 }
@@ -86,7 +86,7 @@ label {
 .options-btns {
     display: flex;
     flex-wrap: wrap;
-    gap: .5rem;
+    gap: .2rem;
     justify-content: center;
     align-items: center;
     margin-top: .5rem;
@@ -113,7 +113,7 @@ label {
 
 #canvas {
     padding: 0;
-    margin: 1rem auto;
+    margin: .5rem auto;
     width: 650px;
     height: 650px;
     display: grid;
@@ -133,4 +133,12 @@ label {
 
 .active {
     background-color: var(--color-pick);
+}
+
+footer {
+    height: 100%;
+    display: flex;
+    gap: .5rem;
+    justify-content: center;
+    align-items: center;
 }

@@ -145,3 +145,8 @@ footer {
     justify-content: center;
     align-items: center;
 }
+
+#gray-toggle {
+    color: #777;
+    text-decoration: line-through;
+}

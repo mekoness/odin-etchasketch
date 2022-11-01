@@ -20,14 +20,16 @@ let mouseDown = false
 canvas.onmousedown = () => (mouseDown = true)
 canvas.onmouseup = () => (mouseDown = false)
 
-// REFRESH GRID
+// REFRESH & PAINT GRID
+
+let painted = false
 
 function refreshGrid() {
   let gridItem = document.querySelectorAll(".grid-item");
   gridItem.forEach(item => {
     item.addEventListener("mousedown", (e) => {
       item.style.setProperty("--color-pick", color);
-      paintGrid(e)
+      paintGrid(e);
     });
     item.addEventListener("mouseenter", (e) => {
       if (mouseDown) {
@@ -40,11 +42,6 @@ function refreshGrid() {
   });
 };
 
-// PAINT GRID
-
-let color = document.querySelector("#color").value;
-let painted = false
-
 function paintGrid(e) {
   if (!eraserBtn) {
     painted = true;
@@ -54,15 +51,19 @@ function paintGrid(e) {
     e.target.classList.remove("active");
   };
   if (rainbowBtn) {
+    painted = true
     color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+    e.target.classList.add("active");
   } else if (!rainbowBtn) {
-    color = document.querySelector("#color").value;
+    return
   };
   if (grayBtn) {
-    color = "rgba(0, 0, 0, 0.1)"; // PLACEHOLDER
+    painted = true
+    color = "rgba(0, 0, 0, 0.1)";
+    e.target.classList.add("active");
   } else if (!grayBtn) {
-    color = document.querySelector("#color").value;
-  }
+    return
+  };
 };
 
 // GRID SIZE SLIDER
@@ -81,12 +82,13 @@ sizeEl.addEventListener("input", () => {
 // COLOR PICKER
 
 const colorPicker = document.querySelector("#color")
+let color = document.querySelector("#color").value;
 
 colorPicker.addEventListener("input", () => {
   color = document.querySelector("#color").value;
 })
 
-// CLEAR CANVAS
+// CLEAR GRID
 
 const clearBtn = document.querySelector("#clear-canvas");
 clearBtn.onclick = () => clearGrid();
@@ -95,6 +97,7 @@ function clearGrid() {
   canvas.innerHTML = "";
   makeGrid(sizeEl.value);
   refreshGrid()
+  gridBorder()
 };
 
 // GRID BORDER

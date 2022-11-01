@@ -50,19 +50,19 @@ function paintGrid(e) {
     painted = false
     e.target.classList.remove("active");
   };
-  if (rainbowBtn) {
+  if (rainbowBtn && !grayBtn) {
     painted = true
     color = `hsl(${Math.random() * 360}, 100%, 50%)`;
     e.target.classList.add("active");
-  } else if (!rainbowBtn) {
-    return
+  } else if (!rainbowBtn && !grayBtn) {
+    color = document.querySelector("#color").value;
   };
-  if (grayBtn) {
+  if (grayBtn && !rainbowBtn) {
     painted = true
     color = "rgba(0, 0, 0, 0.1)";
     e.target.classList.add("active");
-  } else if (!grayBtn) {
-    return
+  } else if (!grayBtn && !rainbowBtn) {
+    color = document.querySelector("#color").value;
   };
 };
 
